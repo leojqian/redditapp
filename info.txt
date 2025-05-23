@@ -1,0 +1,12 @@
+Login for Storymaster:
+l30459324@gmail.com
+wewindows.2025
+
+Python Venv Commands:
+python3 -m venv venv
+source venv/bin/activate
+deactivate
+
+client_id="Yl764s-6k88VD35HH_0Blg",
+client_secret="ERcLaAGDDypF0OQolfKcF9_aPlS0iA",
+user_agent="test by u/Silly_Inspection5308"
