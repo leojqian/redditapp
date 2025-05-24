@@ -2,6 +2,11 @@ Login for Storymaster:
 l30459324@gmail.com
 wewindows.2025
 
+Git Commands:
+$ git init
+$ git add .
+$ git commit -m "Initial commit"
+
 Python Venv Commands:
 python3 -m venv venv
 source venv/bin/activate
