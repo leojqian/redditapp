@@ -1,7 +1,8 @@
 import praw
+import os
+os.environ["IMAGEMAGICK_BINARY"] = r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe" #delete this line if not windows
 from gtts import gTTS
 from moviepy.editor import ColorClip, AudioFileClip, TextClip, CompositeVideoClip
-import os
 import textwrap
 
 # Reddit API setup
@@ -98,6 +99,7 @@ def create_video(submission_title, submission_text):
             os.remove(file)
 
 # Get the Reddit submission
+#submission = reddit.submission(url="https://www.reddit.com/r/AITAH/comments/1kukjww/aita_for_not_telling_my_sister_the_name_chosen/")
 submission = reddit.submission(url="https://www.reddit.com/r/AITAH/comments/1ktt8cq/aita_for_dumping_my_boyfriend_for_saying_a_womans/")
 submission_text = submission.selftext
 submission_title = submission.title

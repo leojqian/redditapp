@@ -1,0 +1,56 @@
+.input-page {
+  height: 100vh;
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: gray;
+  color: black;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.app-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.sub-title {
+  font-size: 1.2rem;
+  color: gray;
+  margin-bottom: 2rem;
+}
+
+.input-form {
+  width: 100%;
+  max-width: 500px;
+  padding: 0 2rem;
+}
+
+.link-input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: 2px solid white;
+  border-radius: 8px;
+  background-color: #111;
+  color: white;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.link-input:focus {
+  border-color: #00d4ff;
+}

@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+.env
+.venv/
+temp/
+output.mp4
+
+# Jupyter
+*.ipynb_checkpoints
+
+# VS Code
+.vscode/
+
+# Node / React
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.DS_Store
+
+# OS junk
+.DS_Store
+Thumbs.db
+ehthumbs.db
