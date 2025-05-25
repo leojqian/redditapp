@@ -1,9 +1,8 @@
 import praw
 from gtts import gTTS
-from moviepy.editor import ColorClip, AudioFileClip, TextClip, CompositeVideoClip, VideoFileClip
+from moviepy.editor import ColorClip, AudioFileClip, TextClip, CompositeVideoClip
 import os
 import textwrap
-import random
 
 # Reddit API setup
 reddit = praw.Reddit(
@@ -43,31 +42,23 @@ def create_video(submission_title, submission_text):
     if not os.path.exists('temp'):
         os.makedirs('temp')
     
-    # Generate audio from text
-    tts = gTTS(text=submission_text, lang='en', slow=False)
+    # Generate audio from text with different voice
+    # Available options for English:
+    # 'en' - US English
+    # 'en-uk' - British English
+    # 'en-au' - Australian English
+    # 'en-ca' - Canadian English
+    # 'en-in' - Indian English
+    tts = gTTS(text=submission_text, lang='en-uk', slow=False)
     tts.save('temp/audio.mp3')
     
     # Load the audio
     audio = AudioFileClip('temp/audio.mp3')
     audio_duration = audio.duration
     
-    # Load and prepare the Minecraft background video
-    minecraft_bg = VideoFileClip('minecraft_bg.mp4')
-    
-    # If the video is longer than 30 seconds, pick a random 30-second segment
-    if minecraft_bg.duration > 30:
-        max_start = minecraft_bg.duration - 30
-        start_time = random.uniform(0, max_start)
-        minecraft_bg = minecraft_bg.subclip(start_time, start_time + 30)
-    
-    # Resize to match our target dimensions (1080x1920)
-    minecraft_bg = minecraft_bg.resize(height=1920)
-    
-    # If the video is shorter than our audio, loop it
-    if minecraft_bg.duration < audio_duration:
-        minecraft_bg = minecraft_bg.loop(duration=audio_duration)
-    else:
-        minecraft_bg = minecraft_bg.subclip(0, audio_duration)
+    # Create a black background video
+    background = ColorClip(size=(1080, 1920), color=(0, 0, 0))
+    background = background.set_duration(audio_duration)
     
     # Create title clip with wrapping and fade effects
     wrapped_title = textwrap.fill(submission_title, width=40)
@@ -85,14 +76,13 @@ def create_video(submission_title, submission_text):
     frame = ColorClip(size=(frame_width, frame_height), color=(50, 50, 50))  # Dark gray frame
     frame = frame.set_position(('center', 'center')).set_duration(audio_duration)
     
-    # Create a slightly smaller black background for the text with some transparency
+    # Create a slightly smaller black background for the text
     text_bg = ColorClip(size=(1040, 1780), color=(0, 0, 0))
     text_bg = text_bg.set_position(('center', 'center')).set_duration(audio_duration)
-    text_bg = text_bg.set_opacity(0.7)  # Make it slightly transparent
     
     # Combine all elements
     final_video = CompositeVideoClip([
-        minecraft_bg,
+        background,
         frame,
         text_bg,
         title_clip
