@@ -1,13 +1,17 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Input from "./pages/Input";
+import React from 'react';
+import './App.css';
+import VideoCreator from './components/VideoCreator';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Input />} />
-      </Routes>
-    </Router>
+    <div className="App">
+      <header className="App-header">
+        <h1>Reddit Story Video Creator</h1>
+      </header>
+      <main>
+        <VideoCreator />
+      </main>
+    </div>
   );
 }
 

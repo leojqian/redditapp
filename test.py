@@ -1,8 +1,7 @@
 import praw
-import os
-#os.environ["IMAGEMAGICK_BINARY"] = r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe" #delete this line if not windows
 from gtts import gTTS
 from moviepy.editor import ColorClip, AudioFileClip, TextClip, CompositeVideoClip
+import os
 import textwrap
 
 # Reddit API setup
@@ -43,14 +42,8 @@ def create_video(submission_title, submission_text):
     if not os.path.exists('temp'):
         os.makedirs('temp')
     
-    # Generate audio from text with different voice
-    # Available options for English:
-    # 'en' - US English
-    # 'en-uk' - British English
-    # 'en-au' - Australian English
-    # 'en-ca' - Canadian English
-    # 'en-in' - Indian English
-    tts = gTTS(text=submission_text, lang='en-uk', slow=False)
+    # Generate audio from text
+    tts = gTTS(text=submission_text, lang='en', slow=False)
     tts.save('temp/audio.mp3')
     
     # Load the audio
@@ -78,7 +71,7 @@ def create_video(submission_title, submission_text):
     frame = frame.set_position(('center', 'center')).set_duration(audio_duration)
     
     # Create a slightly smaller black background for the text
-    text_bg = ColorClip(size=(1040, 1780), color=(0, 0, 0))
+    text_bg = ColorClip(size=(100, 100), color=(255, 255, 0))
     text_bg = text_bg.set_position(('center', 'center')).set_duration(audio_duration)
     
     # Combine all elements
@@ -99,7 +92,6 @@ def create_video(submission_title, submission_text):
             os.remove(file)
 
 # Get the Reddit submission
-#submission = reddit.submission(url="https://www.reddit.com/r/AITAH/comments/1kukjww/aita_for_not_telling_my_sister_the_name_chosen/")
 submission = reddit.submission(url="https://www.reddit.com/r/AITAH/comments/1ktt8cq/aita_for_dumping_my_boyfriend_for_saying_a_womans/")
 submission_text = submission.selftext
 submission_title = submission.title
