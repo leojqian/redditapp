@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Input.css";
 
-export default function InputPage() {
+export default function Input() {
   const [url, setUrl] = useState("");
   const navigate = useNavigate();
 
@@ -18,7 +18,8 @@ export default function InputPage() {
       <div className="logo-placeholder">(logo — don’t have one yet)</div>
       <h1 className="app-title">REDDIT TO TIKTOK</h1>
       <p className="sub-title">(temp app name)</p>
-      <form onSubmit={handleSubmit} className="input-form">
+
+      <form className="input-form" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Upload link here…"
@@ -26,6 +27,9 @@ export default function InputPage() {
           onChange={(e) => setUrl(e.target.value)}
           className="link-input"
         />
+        <button type="submit" className="submit-button">
+          Go
+        </button>
       </form>
     </div>
   );

@@ -1,0 +1,58 @@
+.output-page {
+  background-color: black;
+  color: white;
+  min-height: 100vh;
+  text-align: center;
+  padding: 20px;
+}
+
+.logo-placeholder {
+  margin-bottom: 10px;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  background-color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+.app-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.sub-title {
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.action-button {
+  background-color: #555;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.action-button:hover {
+  background-color: #777;
+}
+
+.video-center {
+  display: flex;
+  justify-content: center;
+}

@@ -38,10 +38,11 @@ def create_text_clips(text, audio_duration, fontsize=40, color='white'):
     
     return clips
 
-def create_video(submission_title, submission_text):
+def create_video(submission_title, submission_text, output_path, update_progress=None):
     # Create a temporary directory for our assets
     if not os.path.exists('temp'):
         os.makedirs('temp')
+    if update_progress: update_progress(5)
     
     # Generate audio from text with different voice
     # Available options for English:
@@ -52,24 +53,29 @@ def create_video(submission_title, submission_text):
     # 'en-in' - Indian English
     tts = gTTS(text=submission_text, lang='en-uk', slow=False)
     tts.save('temp/audio.mp3')
+    if update_progress: update_progress(20)
     
     # Load the audio
     audio = AudioFileClip('temp/audio.mp3')
     audio_duration = audio.duration
+    if update_progress: update_progress(35)
     
     # Create a black background video
     background = ColorClip(size=(1080, 1920), color=(0, 0, 0))
     background = background.set_duration(audio_duration)
+    if update_progress: update_progress(40)
     
     # Create title clip with wrapping and fade effects
     wrapped_title = textwrap.fill(submission_title, width=40)
     title_clip = TextClip(wrapped_title, fontsize=30, color='white', font='Arial-Bold', method='caption', size=(1000, None))
     title_clip = title_clip.set_position(('center', 100))
-    # Make title appear for first 3 seconds with fade in/out
+    # Make title appear for first 3 seconds with fade in/out    
     title_clip = title_clip.set_duration(3).crossfadein(0.5).crossfadeout(0.5)
+    if update_progress: update_progress(50)
     
     # Create text clips synchronized with audio
     text_clips = create_text_clips(submission_text, audio_duration)
+    if update_progress: update_progress(70)
     
     # Create a frame around the text
     frame_width = 1060  # Slightly smaller than video width
@@ -89,21 +95,29 @@ def create_video(submission_title, submission_text):
         title_clip
     ] + text_clips)
     final_video = final_video.set_audio(audio)
+    if update_progress: update_progress(90)
     
     # Write the result to a file
-    final_video.write_videofile('output.mp4', fps=24)
+    final_video.write_videofile(output_path, fps=24)
+    if update_progress: update_progress(100)
     
     # Clean up temporary files
     for file in ['temp/audio.mp3']:
         if os.path.exists(file):
             os.remove(file)
 
-# Get the Reddit submission
-#submission = reddit.submission(url="https://www.reddit.com/r/AITAH/comments/1kukjww/aita_for_not_telling_my_sister_the_name_chosen/")
-submission = reddit.submission(url="https://www.reddit.com/r/AITAH/comments/1ktt8cq/aita_for_dumping_my_boyfriend_for_saying_a_womans/")
-submission_text = submission.selftext
-submission_title = submission.title
+def generate_video_from_reddit(url, output_path='temp/output.mp4', update_progress=None):
+    submission = reddit.submission(url=url)
+    create_video(submission.title, submission.selftext, output_path, update_progress)
 
-# Create the video
-create_video(submission_title, submission_text)
+
+
+# # Get the Reddit submission
+# #submission = reddit.submission(url="https://www.reddit.com/r/AITAH/comments/1kukjww/aita_for_not_telling_my_sister_the_name_chosen/")
+# submission = reddit.submission(url="https://www.reddit.com/r/AITAH/comments/1ktt8cq/aita_for_dumping_my_boyfriend_for_saying_a_womans/")
+# submission_text = submission.selftext
+# submission_title = submission.title
+
+# # Create the video
+# create_video(submission_title, submission_text)
 
